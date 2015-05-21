@@ -19,6 +19,7 @@ private:
     Ui::LoginDialog *ui;
 
     bool connectDb();
+    void createDbTable();
 };
 
 #endif // LOGINDIALOG_H

@@ -12,7 +12,10 @@ LoginDialog::LoginDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //this->setWindowTitle(tr("密码簿登录"));
+    this->setWindowTitle("密码簿登录");
     connectDb();
+    createDbTable();
 }
 
 LoginDialog::~LoginDialog()
@@ -23,10 +26,11 @@ LoginDialog::~LoginDialog()
 bool LoginDialog::connectDb()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setHostName("localhost");
-    db.setUserName("root");   //用户 mydb 和 数据库 mydb 必须事先创建好
-    db.setPassword("123");
+    //db.setHostName("localhost");
+    //db.setUserName("root");   //用户 mydb 和 数据库 mydb 必须事先创建好
+    //db.setPassword("123");
     db.setDatabaseName("pwdbook.db");
+    //db.setDatabaseName(":memory:");
 
     if (!db.open())
     {
@@ -35,4 +39,50 @@ bool LoginDialog::connectDb()
     }
     qDebug()<<"connect success.";
     return true;
+}
+
+void LoginDialog::createDbTable()
+{
+    bool ret1 = false,ret2 = false,ret3 =false;
+    QSqlQuery query;
+    query.exec("create table password (pwd text PRIMARY KEY NOT NULL)");
+    query.exec("select count(pwd) from password");
+    query.next();
+    qDebug() << query.value(0).toUInt();
+    if(query.value(0).toUInt() == 0)
+    {
+        ret1 = query.exec("insert into password values('admin')");
+    }
+
+    query.exec("create table account_info ("
+             "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+             "appname text NOT NULL,"
+             "username text NOT NULL,"
+             "pwd text NOT NULL,"
+              "comment text  NOT NULL,"
+             "updatetime text NOT NULL)"
+               );
+    query.exec("select count(id) from account_info");
+    query.next();
+    qDebug() << query.value(0).toUInt();
+    if(query.value(0).toUInt() == 0)
+    {
+        ret2 = query.exec("insert into account_info(appname,username,pwd,comment,updatetime) values('QQ','1106360','123456','小号，用于网站注册等','2015-05-20_09:05:27')");
+    }
+
+    query.exec("create table login_log ("
+               "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+               "time text NOT NULL,"
+               "state text NOT NULL)"
+               );
+    query.exec("select count(id) from login_log");
+    query.next();
+    qDebug() << query.value(0).toUInt();
+    if(query.value(0).toUInt() == 0)
+    {
+        ret3 = query.exec("insert into login_log(time,state) values('2015-05-20_09:05:27','成功')");
+    }
+
+    qDebug() << ret1 << ret2 << ret3;
+
 }
