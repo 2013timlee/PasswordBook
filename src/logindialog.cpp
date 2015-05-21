@@ -14,11 +14,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setWindowTitle(APP_NAME);
+    this->setWindowTitle(APP_LOGIN_NAME);
     if(!connectDb())
     {
         QString error_msg = "数据库连接失败，请联系软件作者。";
-        QMessageBox::warning(this,APP_NAME,error_msg);
+        QMessageBox::warning(this,APP_LOGIN_NAME,error_msg);
     }
     createDbTable();
 
@@ -108,7 +108,7 @@ void LoginDialog::login()
     else
     {
         QString error_msg = "密码错误，请重新输入密码。";
-        QMessageBox::warning(this,APP_NAME,error_msg);
+        QMessageBox::warning(this,APP_LOGIN_NAME,error_msg);
     }
 }
 
