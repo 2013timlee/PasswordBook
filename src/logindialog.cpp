@@ -1,6 +1,8 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 
+#include "mainwindow.h"
+
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -12,10 +14,16 @@ LoginDialog::LoginDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //this->setWindowTitle(tr("密码簿登录"));
-    this->setWindowTitle("密码簿登录");
-    connectDb();
+    this->setWindowTitle(APP_NAME);
+    if(!connectDb())
+    {
+        QString error_msg = "数据库连接失败，请联系软件作者。";
+        QMessageBox::warning(this,APP_NAME,error_msg);
+    }
     createDbTable();
+
+    connect(ui->loginBtn,SIGNAL(clicked()),this,SLOT(login()));
+    connect(ui->exitBtn,SIGNAL(clicked()),this,SLOT(exit()));
 }
 
 LoginDialog::~LoginDialog()
@@ -26,9 +34,6 @@ LoginDialog::~LoginDialog()
 bool LoginDialog::connectDb()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    //db.setHostName("localhost");
-    //db.setUserName("root");   //用户 mydb 和 数据库 mydb 必须事先创建好
-    //db.setPassword("123");
     db.setDatabaseName("pwdbook.db");
     //db.setDatabaseName(":memory:");
 
@@ -44,6 +49,7 @@ bool LoginDialog::connectDb()
 void LoginDialog::createDbTable()
 {
     bool ret1 = false,ret2 = false,ret3 =false;
+
     QSqlQuery query;
     query.exec("create table password (pwd text PRIMARY KEY NOT NULL)");
     query.exec("select count(pwd) from password");
@@ -85,4 +91,28 @@ void LoginDialog::createDbTable()
 
     qDebug() << ret1 << ret2 << ret3;
 
+}
+
+void LoginDialog::login()
+{
+    QSqlQuery query;
+    query.exec("select pwd from password limit 1");
+    query.next();
+    QString pwd = query.value(0).toString();
+    if(ui->pwdEdit->text() == pwd)
+    {
+        MainWindow *mainWin = new MainWindow(this);
+        this->hide();
+        mainWin->show();
+    }
+    else
+    {
+        QString error_msg = "密码错误，请重新输入密码。";
+        QMessageBox::warning(this,APP_NAME,error_msg);
+    }
+}
+
+void LoginDialog::exit()
+{
+    this->close();
 }

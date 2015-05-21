@@ -1,0 +1,6 @@
+#ifndef DEFINES_H
+#define DEFINES_H
+
+#define APP_NAME "√‹¬Î≤æ"
+
+#endif // DEFINES_H

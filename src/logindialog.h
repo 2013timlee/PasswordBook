@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "defines.h"
+
 namespace Ui {
 class LoginDialog;
 }
@@ -20,6 +22,11 @@ private:
 
     bool connectDb();
     void createDbTable();
+
+private slots:
+    void login();
+    void exit();
+
 };
 
 #endif // LOGINDIALOG_H
