@@ -34,7 +34,7 @@ LoginDialog::~LoginDialog()
 bool LoginDialog::connectDb()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("pwdbook.db");
+    db.setDatabaseName(DB_NAME);
     //db.setDatabaseName(":memory:");
 
     if (!db.open())
@@ -101,9 +101,9 @@ void LoginDialog::login()
     QString pwd = query.value(0).toString();
     if(ui->pwdEdit->text() == pwd)
     {
-        MainWindow *mainWin = new MainWindow(this);
-        this->hide();
+        MainWindow *mainWin = new MainWindow(0);
         mainWin->show();
+        this->close();
     }
     else
     {

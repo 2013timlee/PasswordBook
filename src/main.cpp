@@ -9,6 +9,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    //判断data文件夹是否存在，若不存在则新建
+    QDir *dir = new QDir;
+    bool exist = dir->exists("data");
+    if(!exist)
+         dir->mkdir("data");
+
     QString strLibPath(QDir::toNativeSeparators
                        (QApplication::applicationDirPath())+QDir::separator()+"plugins");
 
