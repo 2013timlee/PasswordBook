@@ -20,15 +20,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    bool updateAccInfoViewFlag;
-
 private:
     Ui::MainWindow *ui;
 
     QSqlTableModel *model;
     ConfigOpt *configOpt;
+    bool updateAccInfoViewFlag;
 
     void closeEvent(QCloseEvent *event);
+    void initLoinLog();
     void initAccInofView();
     void updateView();
 
@@ -36,6 +36,9 @@ private slots:
     void updateAccInofView();
     void showAddAccInfoDialog();
     void showEditAccInfoDialog();
+    void deleteAccInfo();
+    void deleteAllAccInfo();
+    void exit();
 };
 
 #endif // MAINWINDOW_H

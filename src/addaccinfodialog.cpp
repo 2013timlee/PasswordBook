@@ -45,7 +45,7 @@ void AddAccInfoDialog::saveAccInfo()
         return;
     }
     *updateAccInfoViewFlag = true;
-    QMessageBox::warning(this,APP_NAME,"添加账户信息成功");
+    QMessageBox::information(this,APP_NAME,"添加账户信息成功");
 }
 
 void AddAccInfoDialog::exit()

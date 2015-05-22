@@ -9,6 +9,8 @@
 #include <QDateTime>
 #include <QDebug>
 
+#include "helpdialog.h"
+
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoginDialog)
@@ -130,4 +132,10 @@ void LoginDialog::login()
 void LoginDialog::exit()
 {
     this->close();
+}
+
+void LoginDialog::showHelpDialog()
+{
+    HelpDialog *dlg = new HelpDialog();
+    dlg->show();
 }

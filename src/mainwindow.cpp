@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QString test = "test";
     configOpt->setUpateFlag(test);
 
+    initLoinLog();
     initAccInofView();
 
     updateAccInfoViewFlag = false;
@@ -35,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->addBtn,SIGNAL(clicked()),this,SLOT(showAddAccInfoDialog()));
     connect(ui->editBtn,SIGNAL(clicked()),this,SLOT(showEditAccInfoDialog()));
+    connect(ui->deleteBtn,SIGNAL(clicked()),this,SLOT(deleteAccInfo()));
+    connect(ui->deleteAllBtn,SIGNAL(clicked()),this,SLOT(deleteAllAccInfo()));
+    connect(ui->exitBtn,SIGNAL(clicked()),this,SLOT(exit()));
 }
 
 MainWindow::~MainWindow()
@@ -46,7 +50,7 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     QMessageBox::StandardButton button;
-    button = QMessageBox::question(this, APP_NAME,
+    button = QMessageBox::warning(this, APP_NAME,
                                    QString(tr("是否退出程序?")),
                                    QMessageBox::Yes | QMessageBox::No);
 
@@ -60,16 +64,40 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
+void MainWindow::initLoinLog()
+{
+    QSqlQuery query;
+    QString sql = "select time from login_log where state='成功' order by time desc limit 1";
+    query.exec(sql);
+    query.next();
+    QString lastLoginSuc_time = query.value(0).toString();
+    ui->loginSuc_time->setText(lastLoginSuc_time);
+
+    sql = "select count(id) from login_log where state='成功'";
+    query.exec(sql);
+    query.next();
+    QString Suc_num = query.value(0).toString();
+    ui->loginSuc_num->setText(Suc_num);
+
+    sql = "select time from login_log where state='失败' order by time desc limit 1";
+    query.exec(sql);
+    query.next();
+    QString lastLoginFail_time = query.value(0).toString();
+    ui->loginFail_time->setText(lastLoginFail_time);
+
+    sql = "select count(id) from login_log where state='失败'";
+    query.exec(sql);
+    query.next();
+    QString Fail_num = query.value(0).toString();
+    ui->loginFail_num->setText(Fail_num);
+}
+
 void MainWindow::initAccInofView()
 {
     QSqlQuery query;
     query.exec("select count(id) from account_info");
     query.next();
     int RowCount = query.value(0).toInt();
-    if (RowCount == 0)
-    {
-        return;
-    }
 
     QString sql = "select id,appname,username,pwd,comment,updatetime from account_info order by appname asc";
     query.exec(sql);
@@ -111,10 +139,6 @@ void MainWindow::updateView()
     query.exec("select count(id) from account_info");
     query.next();
     int RowCount = query.value(0).toInt();
-    if (RowCount == 0)
-    {
-        return;
-    }
 
     QString sql = "select id,appname,username,pwd,comment,updatetime from account_info order by appname asc";
     query.exec(sql);
@@ -122,7 +146,7 @@ void MainWindow::updateView()
     qDebug() << "RowCount:" << RowCount;
 
 
-    ui->accountInfoView->clear();
+    ui->accountInfoView->clearContents();
     ui->accountInfoView->setRowCount(RowCount);
     ui->accountInfoView->setColumnCount(ACC_INFO_FIELD_COUNT);
 
@@ -161,9 +185,45 @@ void MainWindow::showEditAccInfoDialog()
         QMessageBox::warning(this,APP_NAME,"请选中需要修改的账户信息");
         return;
     }
-    QString infoIdStr = ui->accountInfoView->item(row,0)->text();
-    int infoId = infoIdStr.toInt();
+    int infoId = ui->accountInfoView->item(row,0)->text().toInt();
     qDebug() << infoId;
     EditAccInfoDialog *dlg = new EditAccInfoDialog(this, &updateAccInfoViewFlag, infoId);
     dlg->show();
+}
+
+void MainWindow::deleteAccInfo()
+{
+    int row = ui->accountInfoView->currentIndex().row();
+    if(row < 0)
+    {
+        QMessageBox::warning(this,APP_NAME,"请选中需要修改的账户信息");
+        return;
+    }
+    int infoId = ui->accountInfoView->item(row,0)->text().toInt();
+    qDebug() << infoId;
+    int ok = QMessageBox::warning(this,APP_NAME,"是否删除当前选中的账户信息？",QMessageBox::Yes,QMessageBox::No);
+    if(ok == QMessageBox::No)
+        return;
+    QSqlQuery query;
+    QString sql = QString("delete from account_info where id = %1").arg(infoId);
+    query.exec(sql);
+    updateAccInfoViewFlag = true;
+    QMessageBox::information(this,APP_NAME,"删除成功");
+}
+
+void MainWindow::deleteAllAccInfo()
+{
+    int ok = QMessageBox::warning(this,APP_NAME,"是否删除所有的账户信息？",QMessageBox::Yes,QMessageBox::No);
+    if(ok == QMessageBox::No)
+        return;
+    QSqlQuery query;
+    QString sql = "delete from account_info";
+    query.exec(sql);
+    updateAccInfoViewFlag = true;
+    QMessageBox::information(this,APP_NAME,"删除成功");
+}
+
+void MainWindow::exit()
+{
+    this->close();
 }

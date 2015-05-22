@@ -54,8 +54,8 @@ void EditAccInfoDialog::saveAccInfo()
     QString comment = ui->commentEdit->text();
     QString updatetime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
     QSqlQuery query;
-    QString sql = QString("insert into account_info(appname,username,pwd,comment,updatetime) values ('%1','%2','%3','%4','%5')")
-            .arg(appname).arg(username).arg(pwd).arg(comment).arg(updatetime);
+    QString sql = QString("update account_info set appname='%1',username='%2',pwd='%3',comment='%4',updatetime='%5' where id=%6")
+            .arg(appname).arg(username).arg(pwd).arg(comment).arg(updatetime).arg(infoId);
     qDebug()<<sql;
     if(!query.exec(sql))
     {
@@ -63,7 +63,7 @@ void EditAccInfoDialog::saveAccInfo()
         return;
     }
     *updateAccInfoViewFlag = true;
-    QMessageBox::warning(this,APP_NAME,"修改账户信息成功");
+    QMessageBox::information(this,APP_NAME,"修改账户信息成功");
 }
 
 void EditAccInfoDialog::exit()
