@@ -5,4 +5,6 @@
 #define APP_NAME "√‹¬Î≤æ"
 #define DB_NAME "./data/pwdbook.db"
 
+#define ACC_INFO_FIELD_COUNT 5
+
 #endif // DEFINES_H

@@ -107,7 +107,7 @@
     <string>忘记密码</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -132,11 +132,15 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="pwdEdit"/>
+     <widget class="QLineEdit" name="pwdEdit">
+      <property name="text">
+       <string>admin</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>

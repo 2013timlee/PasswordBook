@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QDateTime>
 #include <QDebug>
 
 LoginDialog::LoginDialog(QWidget *parent) :
@@ -14,12 +15,14 @@ LoginDialog::LoginDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setWindowFlags(windowFlags()&~Qt::WindowCloseButtonHint&~Qt::WindowContextHelpButtonHint);
     this->setWindowTitle(APP_LOGIN_NAME);
     if(!connectDb())
     {
         QString error_msg = "数据库连接失败，请联系软件作者。";
         QMessageBox::warning(this,APP_LOGIN_NAME,error_msg);
     }
+
     createDbTable();
 
     connect(ui->loginBtn,SIGNAL(clicked()),this,SLOT(login()));
@@ -95,6 +98,8 @@ void LoginDialog::createDbTable()
 
 void LoginDialog::login()
 {
+    QString time = QDateTime::currentDateTime().toString("yyyy:MM:dd hh:mm:ss");
+    QString sql;
     QSqlQuery query;
     query.exec("select pwd from password limit 1");
     query.next();
@@ -103,10 +108,14 @@ void LoginDialog::login()
     {
         MainWindow *mainWin = new MainWindow(0);
         mainWin->show();
+        sql = QString("insert into login_log(time,state) values('%1','成功')").arg(time);
+        query.exec(sql);
         this->close();
     }
     else
     {
+        sql = QString("insert into login_log(time,state) values('%1','失败')").arg(time);
+        query.exec(sql);
         QString error_msg = "密码错误，请重新输入密码。";
         QMessageBox::warning(this,APP_LOGIN_NAME,error_msg);
     }

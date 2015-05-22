@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <QCloseEvent>
+#include <QSqlTableModel>
 
 namespace Ui {
 class MainWindow;
@@ -20,7 +21,10 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    QSqlTableModel *model;
+
     void closeEvent(QCloseEvent *event);
+    void initView();
 };
 
 #endif // MAINWINDOW_H
