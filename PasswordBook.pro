@@ -13,13 +13,24 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = PasswordBook
 TEMPLATE = app
 
+DESTDIR = ./
+
 
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
-    src/logindialog.cpp
+    src/logindialog.cpp \
+    src/addaccinfodialog.cpp \
+    src/configopt.cpp \
+    src/editaccinfodialog.cpp
 
 HEADERS  += src/mainwindow.h \
-    src/logindialog.h
+    src/logindialog.h \
+    src/defines.h \
+    src/addaccinfodialog.h \
+    src/configopt.h \
+    src/editaccinfodialog.h
 
 FORMS    += src/mainwindow.ui \
-    src/logindialog.ui
+    src/logindialog.ui \
+    src/addaccinfodialog.ui \
+    src/editaccinfodialog.ui

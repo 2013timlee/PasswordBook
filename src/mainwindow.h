@@ -6,6 +6,8 @@
 #include <QCloseEvent>
 #include <QSqlTableModel>
 
+#include "configopt.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -18,13 +20,22 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    bool updateAccInfoViewFlag;
+
 private:
     Ui::MainWindow *ui;
 
     QSqlTableModel *model;
+    ConfigOpt *configOpt;
 
     void closeEvent(QCloseEvent *event);
-    void initView();
+    void initAccInofView();
+    void updateView();
+
+private slots:
+    void updateAccInofView();
+    void showAddAccInfoDialog();
+    void showEditAccInfoDialog();
 };
 
 #endif // MAINWINDOW_H

@@ -20,7 +20,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     if(!connectDb())
     {
         QString error_msg = "数据库连接失败，请联系软件作者。";
-        QMessageBox::warning(this,APP_LOGIN_NAME,error_msg);
+        QMessageBox::warning(this,APP_NAME,error_msg);
     }
 
     createDbTable();
@@ -51,10 +51,11 @@ bool LoginDialog::connectDb()
 
 void LoginDialog::createDbTable()
 {
-    bool ret1 = false,ret2 = false,ret3 =false;
+    //bool ret1 = false,ret2 = false,ret3 =false;
 
     QSqlQuery query;
     query.exec("create table password (pwd text PRIMARY KEY NOT NULL)");
+    /*
     query.exec("select count(pwd) from password");
     query.next();
     qDebug() << query.value(0).toUInt();
@@ -62,6 +63,7 @@ void LoginDialog::createDbTable()
     {
         ret1 = query.exec("insert into password values('admin')");
     }
+    */
 
     query.exec("create table account_info ("
              "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
@@ -71,6 +73,7 @@ void LoginDialog::createDbTable()
               "comment text  NOT NULL,"
              "updatetime text NOT NULL)"
                );
+    /*
     query.exec("select count(id) from account_info");
     query.next();
     qDebug() << query.value(0).toUInt();
@@ -78,12 +81,14 @@ void LoginDialog::createDbTable()
     {
         ret2 = query.exec("insert into account_info(appname,username,pwd,comment,updatetime) values('QQ','1106360','123456','小号，用于网站注册等','2015-05-20_09:05:27')");
     }
+    */
 
     query.exec("create table login_log ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                "time text NOT NULL,"
                "state text NOT NULL)"
                );
+    /*
     query.exec("select count(id) from login_log");
     query.next();
     qDebug() << query.value(0).toUInt();
@@ -93,6 +98,7 @@ void LoginDialog::createDbTable()
     }
 
     qDebug() << ret1 << ret2 << ret3;
+    */
 
 }
 
@@ -117,7 +123,7 @@ void LoginDialog::login()
         sql = QString("insert into login_log(time,state) values('%1','失败')").arg(time);
         query.exec(sql);
         QString error_msg = "密码错误，请重新输入密码。";
-        QMessageBox::warning(this,APP_LOGIN_NAME,error_msg);
+        QMessageBox::warning(this,APP_NAME,error_msg);
     }
 }
 
