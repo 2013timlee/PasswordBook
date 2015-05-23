@@ -22,16 +22,23 @@ MainWindow::MainWindow(QWidget *parent) :
 
     configOpt = ConfigOpt::GetInstance();
 
-    QString test = "test";
-    configOpt->setUpateFlag(test);
+    showFlag = false;
+    ui->showClearText->setChecked(false);
+    QString showFlagStr = configOpt->getShowFlag();
+    if(!showFlagStr.isEmpty())
+    {
+        showFlag = (bool)showFlagStr.toInt();
+        if(showFlag)
+            ui->showClearText->setChecked(true);
+    }
 
     initLoinLog();
-    initAccInofView();
+    initAccInfoView();
 
     updateAccInfoViewFlag = false;
 
     QTimer *timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(updateAccInofView()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(updateAccInfoView()));
     timer->start(500);
 
     connect(ui->addBtn,SIGNAL(clicked()),this,SLOT(showAddAccInfoDialog()));
@@ -39,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->deleteBtn,SIGNAL(clicked()),this,SLOT(deleteAccInfo()));
     connect(ui->deleteAllBtn,SIGNAL(clicked()),this,SLOT(deleteAllAccInfo()));
     connect(ui->exitBtn,SIGNAL(clicked()),this,SLOT(exit()));
+    connect(ui->showClearText,SIGNAL(stateChanged(int)),this,SLOT(updateAccinfoView_pwd()));
 }
 
 MainWindow::~MainWindow()
@@ -98,7 +106,7 @@ void MainWindow::initLoinLog()
     }
 }
 
-void MainWindow::initAccInofView()
+void MainWindow::initAccInfoView()
 {
     QSqlQuery query;
     query.exec("select count(id) from account_info");
@@ -130,12 +138,21 @@ void MainWindow::initAccInofView()
     while (query.next())
     {
         for(int j=0; j<ACC_INFO_FIELD_COUNT; j++)
-            ui->accountInfoView->setItem(i, j, new QTableWidgetItem(query.value(j).toString()));
+        {
+            if(!ui->showClearText->isChecked() && j == 3)
+            {
+                ui->accountInfoView->setItem(i, j, new QTableWidgetItem("******"));
+            }
+            else
+            {
+                ui->accountInfoView->setItem(i, j, new QTableWidgetItem(query.value(j).toString()));
+            }
+        }
         i++;
     }
 
-    ui->accountInfoView->sortByColumn(1,Qt::AscendingOrder);
-    ui->accountInfoView->setSortingEnabled(true);
+    //ui->accountInfoView->sortByColumn(1,Qt::AscendingOrder);
+    //ui->accountInfoView->setSortingEnabled(true);
 
 }
 
@@ -160,15 +177,39 @@ void MainWindow::updateView()
     while (query.next())
     {
         for(int j=0; j<ACC_INFO_FIELD_COUNT; j++)
-            ui->accountInfoView->setItem(i, j, new QTableWidgetItem(query.value(j).toString()));
+        {
+            if(!ui->showClearText->isChecked() && j == 3)
+            {
+                ui->accountInfoView->setItem(i, j, new QTableWidgetItem("******"));
+            }
+            else
+            {
+                ui->accountInfoView->setItem(i, j, new QTableWidgetItem(query.value(j).toString()));
+            }
+        }
         i++;
     }
     ui->accountInfoView->hideColumn(0);
 
 }
 
-void MainWindow::updateAccInofView()
+void MainWindow::updateAccInfoView()
 {
+    if(updateAccInfoViewFlag)
+    {
+        updateAccInfoViewFlag = false;
+        updateView();
+        qDebug() << "initAccInofView()";
+    }
+}
+
+void MainWindow::updateAccinfoView_pwd()
+{
+    if(ui->showClearText->isChecked())
+        configOpt->setShowFlag("1");
+    else
+        configOpt->setShowFlag("0");
+    updateAccInfoViewFlag = true;
     if(updateAccInfoViewFlag)
     {
         updateAccInfoViewFlag = false;

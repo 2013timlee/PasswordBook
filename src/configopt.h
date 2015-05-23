@@ -5,7 +5,7 @@
 
 #define CONFIG_FILE "config.ini"
 
-#define UPDATE_FLAG "update/flag"
+#define SHOW_FLAG "show/flag"
 
 class ConfigOpt
 {    
@@ -22,8 +22,8 @@ private:
 
 
 public:
-    void setUpateFlag(QString updateFlag);
-    QString getUpateFlag();
+    void setShowFlag(QString showFlag);
+    QString getShowFlag();
 
 };
 

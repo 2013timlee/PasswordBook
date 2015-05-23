@@ -26,14 +26,16 @@ private:
     QSqlTableModel *model;
     ConfigOpt *configOpt;
     bool updateAccInfoViewFlag;
+    bool showFlag;
 
     void closeEvent(QCloseEvent *event);
     void initLoinLog();
-    void initAccInofView();
+    void initAccInfoView();
     void updateView();
 
 private slots:
-    void updateAccInofView();
+    void updateAccInfoView();
+    void updateAccinfoView_pwd();
     void showAddAccInfoDialog();
     void showEditAccInfoDialog();
     void deleteAccInfo();

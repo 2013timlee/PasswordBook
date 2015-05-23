@@ -16,15 +16,15 @@ ConfigOpt* ConfigOpt::GetInstance()
     return instance;
 }
 
-void ConfigOpt::setUpateFlag(QString updateFlag)
+void ConfigOpt::setShowFlag(QString updateFlag)
 {
-    settings->setValue(UPDATE_FLAG,updateFlag);
+    settings->setValue(SHOW_FLAG,updateFlag);
 }
 
 //================================================================//
 //功能：获取"记住登录信息"配置
 //================================================================//
-QString ConfigOpt::getUpateFlag()
+QString ConfigOpt::getShowFlag()
 {
-    return settings->value(UPDATE_FLAG).toString();
+    return settings->value(SHOW_FLAG).toString();
 }
