@@ -8,7 +8,7 @@
 
 #include "defines.h"
 
-EditAccInfoDialog::EditAccInfoDialog(QWidget *parent , bool *updateAccInfoViewFlag, int infoId) :
+EditAccInfoDialog::EditAccInfoDialog(QWidget *parent , bool *updateAccInfoViewFlag, QString infoId) :
     QDialog(parent),
     ui(new Ui::EditAccInfoDialog)
 {
@@ -17,9 +17,9 @@ EditAccInfoDialog::EditAccInfoDialog(QWidget *parent , bool *updateAccInfoViewFl
     setWindowFlags(windowFlags()&~Qt::WindowCloseButtonHint&~Qt::WindowContextHelpButtonHint);
     this->setWindowTitle("修改账户信息");
     this->updateAccInfoViewFlag = updateAccInfoViewFlag;
-    this->infoId = infoId;
 
-    initDialog();
+    this->infoId = infoId;
+    initDialog(infoId);
 
     connect(ui->saveBtn,SIGNAL(clicked()),this,SLOT(saveAccInfo()));
     connect(ui->exitBtn,SIGNAL(clicked()),this,SLOT(exit()));
@@ -30,10 +30,10 @@ EditAccInfoDialog::~EditAccInfoDialog()
     delete ui;
 }
 
-void EditAccInfoDialog::initDialog()
+void EditAccInfoDialog::initDialog(QString infoId)
 {
     QSqlQuery query;
-    QString sql = "select appname,username,pwd,comment from account_info";
+    QString sql = QString("select appname,username,pwd,comment from account_info where id=%1").arg(infoId);
     query.exec(sql);
     query.next();
     QString appname = query.value(0).toString();

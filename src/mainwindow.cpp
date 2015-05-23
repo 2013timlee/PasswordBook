@@ -67,29 +67,35 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::initLoinLog()
 {
     QSqlQuery query;
-    QString sql = "select time from login_log where state='成功' order by time desc limit 1";
-    query.exec(sql);
-    query.next();
-    QString lastLoginSuc_time = query.value(0).toString();
-    ui->loginSuc_time->setText(lastLoginSuc_time);
-
-    sql = "select count(id) from login_log where state='成功'";
+    QString sql = "select count(id) from login_log where state='成功'";
     query.exec(sql);
     query.next();
     QString Suc_num = query.value(0).toString();
     ui->loginSuc_num->setText(Suc_num);
 
-    sql = "select time from login_log where state='失败' order by time desc limit 1";
-    query.exec(sql);
-    query.next();
-    QString lastLoginFail_time = query.value(0).toString();
-    ui->loginFail_time->setText(lastLoginFail_time);
+    if(Suc_num.toInt() != 0)
+    {
+        sql = "select time from login_log where state='成功' order by time desc limit 1";
+        query.exec(sql);
+        query.next();
+        QString lastLoginSuc_time = query.value(0).toString();
+        ui->loginSuc_time->setText(lastLoginSuc_time);
+    }
 
     sql = "select count(id) from login_log where state='失败'";
     query.exec(sql);
     query.next();
     QString Fail_num = query.value(0).toString();
     ui->loginFail_num->setText(Fail_num);
+
+    if(Fail_num.toInt())
+    {
+        sql = "select time from login_log where state='失败' order by time desc limit 1";
+        query.exec(sql);
+        query.next();
+        QString lastLoginFail_time = query.value(0).toString();
+        ui->loginFail_time->setText(lastLoginFail_time);
+    }
 }
 
 void MainWindow::initAccInofView()
@@ -185,7 +191,7 @@ void MainWindow::showEditAccInfoDialog()
         QMessageBox::warning(this,APP_NAME,"请选中需要修改的账户信息");
         return;
     }
-    int infoId = ui->accountInfoView->item(row,0)->text().toInt();
+    QString infoId = ui->accountInfoView->item(row,0)->text();
     qDebug() << infoId;
     EditAccInfoDialog *dlg = new EditAccInfoDialog(this, &updateAccInfoViewFlag, infoId);
     dlg->show();

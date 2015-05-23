@@ -26,7 +26,6 @@ private:
 private slots:
     void login();
     void exit();
-    void showHelpDialog();
 };
 
 #endif // LOGINDIALOG_H

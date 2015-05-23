@@ -9,8 +9,6 @@
 #include <QDateTime>
 #include <QDebug>
 
-#include "helpdialog.h"
-
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoginDialog)
@@ -21,7 +19,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     this->setWindowTitle(APP_LOGIN_NAME);
     if(!connectDb())
     {
-        QString error_msg = "数据库连接失败，请联系软件作者。";
+        QString error_msg = "数据库连接失败。\n请联系软件作者 Tim ：872758512@qq.com";
         QMessageBox::warning(this,APP_NAME,error_msg);
     }
 
@@ -123,7 +121,7 @@ void LoginDialog::login()
     {
         sql = QString("insert into login_log(time,state) values('%1','失败')").arg(time);
         query.exec(sql);
-        QString error_msg = "密码错误，请重新输入密码。";
+        QString error_msg = "密码错误，请重新输入密码。\n初始密码为admin。\n如果忘记密码，请联系软件作者 Tim ：872758512@qq.com";
         QMessageBox::warning(this,APP_NAME,error_msg);
     }
 }
@@ -131,10 +129,4 @@ void LoginDialog::login()
 void LoginDialog::exit()
 {
     this->close();
-}
-
-void LoginDialog::showHelpDialog()
-{
-    HelpDialog *dlg = new HelpDialog();
-    dlg->show();
 }

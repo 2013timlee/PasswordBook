@@ -12,16 +12,15 @@ class EditAccInfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditAccInfoDialog(QWidget *parent = 0, bool *updateAccInfoViewFlag = false, int infoId = 0);
+    explicit EditAccInfoDialog(QWidget *parent = 0, bool *updateAccInfoViewFlag = false, QString infoId = "0");
     ~EditAccInfoDialog();
 
 private:
     Ui::EditAccInfoDialog *ui;
 
     bool *updateAccInfoViewFlag;
-    int infoId;
-
-    void initDialog();
+    QString infoId;
+    void initDialog(QString infoId);
 
 private slots:
     void saveAccInfo();

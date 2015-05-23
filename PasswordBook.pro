@@ -21,22 +21,19 @@ SOURCES += src/main.cpp\
     src/logindialog.cpp \
     src/addaccinfodialog.cpp \
     src/configopt.cpp \
-    src/editaccinfodialog.cpp \
-    src/helpdialog.cpp
+    src/editaccinfodialog.cpp
 
 HEADERS  += src/mainwindow.h \
     src/logindialog.h \
     src/defines.h \
     src/addaccinfodialog.h \
     src/configopt.h \
-    src/editaccinfodialog.h \
-    src/helpdialog.h
+    src/editaccinfodialog.h
 
 FORMS    += src/mainwindow.ui \
     src/logindialog.ui \
     src/addaccinfodialog.ui \
-    src/editaccinfodialog.ui \
-    src/helpdialog.ui
+    src/editaccinfodialog.ui
 
 RC_FILE += ./ico.rc
 
