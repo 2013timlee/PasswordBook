@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::ChangePwdDialog *ui;
+
+private slots:
+    void exit();
+    void saveNewPwd();
 };
 
 #endif // CHANGEPWDDIALOG_H

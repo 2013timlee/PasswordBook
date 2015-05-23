@@ -16,7 +16,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowFlags(windowFlags()&~Qt::WindowCloseButtonHint&~Qt::WindowContextHelpButtonHint);
-    this->setWindowTitle("ÃÜÂë²¾µÇÂ¼ Tim : 872758512@qq.com");
+    this->setWindowTitle(APP_LOGIN_NAME);
 
     if(!connectFakeDb2())
     {
