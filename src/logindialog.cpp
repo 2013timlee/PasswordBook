@@ -57,15 +57,14 @@ void LoginDialog::createDbTable()
 
     QSqlQuery query;
     query.exec("create table password (pwd text PRIMARY KEY NOT NULL)");
-    /*
+
     query.exec("select count(pwd) from password");
     query.next();
     qDebug() << query.value(0).toUInt();
     if(query.value(0).toUInt() == 0)
     {
-        ret1 = query.exec("insert into password values('admin')");
+        query.exec("insert into password values('admin')");
     }
-    */
 
     query.exec("create table account_info ("
              "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"

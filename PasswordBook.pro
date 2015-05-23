@@ -37,3 +37,8 @@ FORMS    += src/mainwindow.ui \
     src/addaccinfodialog.ui \
     src/editaccinfodialog.ui \
     src/helpdialog.ui
+
+RC_FILE += ./ico.rc
+
+OTHER_FILES += \
+    ico.rc
