@@ -37,7 +37,7 @@
    <property name="title">
     <string/>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>13</x>
@@ -57,7 +57,7 @@
      <item row="0" column="1">
       <widget class="QLineEdit" name="appnameEdit">
        <property name="text">
-        <string>电子邮箱</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -78,7 +78,7 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="usernameEdit">
        <property name="text">
-        <string>QQ</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -99,7 +99,7 @@
      <item row="2" column="1">
       <widget class="QLineEdit" name="pwdEdit">
        <property name="text">
-        <string>123</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -120,14 +120,17 @@
      <item row="3" column="1" colspan="2">
       <widget class="QLineEdit" name="commentEdit">
        <property name="text">
-        <string>其他</string>
+        <string/>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Normal</enum>
        </property>
       </widget>
      </item>
     </layout>
    </widget>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>420</x>

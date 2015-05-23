@@ -3,7 +3,7 @@
 
 #define APP_LOGIN_NAME "ÃÜÂë²¾µÇÂ¼"
 #define APP_NAME "ÃÜÂë²¾"
-#define DB_NAME "./data/pwdbook.db"
+#define DB_NAME "./data/encrypt.exe"
 
 
 #endif // DEFINES_H

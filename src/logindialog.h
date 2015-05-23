@@ -21,7 +21,10 @@ private:
     Ui::LoginDialog *ui;
 
     bool connectDb();
+    bool connectFakeDb();
+    bool connectFakeDb2();
     void createDbTable();
+    void mousePressEvent(QMouseEvent *);
 
 private slots:
     void login();

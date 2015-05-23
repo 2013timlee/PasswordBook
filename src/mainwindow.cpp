@@ -9,6 +9,8 @@
 #include "defines.h"
 #include "addaccinfodialog.h"
 #include "editaccinfodialog.h"
+#include "changepwddialog.h"
+#include "introdialog.h"
 
 #define ACC_INFO_FIELD_COUNT 6
 
@@ -47,6 +49,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->deleteAllBtn,SIGNAL(clicked()),this,SLOT(deleteAllAccInfo()));
     connect(ui->exitBtn,SIGNAL(clicked()),this,SLOT(exit()));
     connect(ui->showClearText,SIGNAL(stateChanged(int)),this,SLOT(updateAccinfoView_pwd()));
+    connect(ui->changePwdAction,SIGNAL(triggered()),this,SLOT(showChangePwdDialog()));
+    connect(ui->showIntroAction,SIGNAL(triggered()),this,SLOT(showIntroDialog()));
+    connect(ui->exitAction,SIGNAL(triggered()),this,SLOT(exit()));
 }
 
 MainWindow::~MainWindow()
@@ -273,4 +278,16 @@ void MainWindow::deleteAllAccInfo()
 void MainWindow::exit()
 {
     this->close();
+}
+
+void MainWindow::showChangePwdDialog()
+{
+    ChangePwdDialog *dlg = new ChangePwdDialog(this);
+    dlg->show();
+}
+
+void MainWindow::showIntroDialog()
+{
+    IntroDialog *dlg = new IntroDialog(this);
+    dlg->show();
 }

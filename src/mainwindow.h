@@ -41,6 +41,8 @@ private slots:
     void deleteAccInfo();
     void deleteAllAccInfo();
     void exit();
+    void showChangePwdDialog();
+    void showIntroDialog();
 };
 
 #endif // MAINWINDOW_H
