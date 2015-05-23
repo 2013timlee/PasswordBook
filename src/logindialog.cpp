@@ -197,13 +197,18 @@ void LoginDialog::createDbTable()
     if(query.value(0).toUInt() == 0)
     {
         query.exec("insert into password values('admin')");
+    }
 
+    query.exec("select pwd from password limit 1");
+    query.next();
+    if(query.value(0).toString() == "admin")
+    {
         ui->pwdEdit->setEchoMode(QLineEdit::Normal);
         QPalette palette=ui->pwdEdit->palette();
         //设置行编辑器不可用时的背景颜色为蓝色
         palette.setColor(QPalette::Text,Qt::gray);
         ui->pwdEdit->setPalette(palette);
-        ui->pwdEdit->setText("初始密码为admin");
+        ui->pwdEdit->setText("初始密码为admin，记得修改密码哦");
     }
 
     query.exec("create table account_info ("
