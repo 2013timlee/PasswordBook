@@ -121,7 +121,7 @@ void LoginDialog::login()
     {
         sql = QString("insert into login_log(time,state) values('%1','失败')").arg(time);
         query.exec(sql);
-        QString error_msg = "密码错误，请重新输入密码。\n初始密码为admin。\n如果忘记密码，请联系软件作者 Tim ：872758512@qq.com";
+        QString error_msg = "密码错误，请重新输入密码\n初始密码为admin\n如果忘记密码，请联系软件作者 Tim ：872758512@qq.com";
         QMessageBox::warning(this,APP_NAME,error_msg);
     }
 }
