@@ -158,7 +158,7 @@ void MainWindow::initAccInfoView()
         i++;
     }
 
-    //ui->accountInfoView->sortByColumn(1,Qt::AscendingOrder);
+    ui->accountInfoView->sortByColumn(1,Qt::AscendingOrder);
     //ui->accountInfoView->setSortingEnabled(true);
 
 }
@@ -197,6 +197,7 @@ void MainWindow::updateView()
         i++;
     }
     ui->accountInfoView->hideColumn(0);
+    ui->accountInfoView->sortByColumn(1,Qt::AscendingOrder);
 
 }
 
