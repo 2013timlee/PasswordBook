@@ -125,6 +125,7 @@ void MainWindow::initAccInfoView()
 
     qDebug() << "RowCount:" << RowCount;
 
+    ui->accountInfoView->setSortingEnabled(false);
     ui->accountInfoView->setRowCount(RowCount);
     ui->accountInfoView->setColumnCount(ACC_INFO_FIELD_COUNT);
     ui->accountInfoView->hideColumn(0);
@@ -159,7 +160,7 @@ void MainWindow::initAccInfoView()
     }
 
     ui->accountInfoView->sortByColumn(1,Qt::AscendingOrder);
-    //ui->accountInfoView->setSortingEnabled(true);
+    ui->accountInfoView->setSortingEnabled(true);
 
 }
 
@@ -175,7 +176,7 @@ void MainWindow::updateView()
 
     qDebug() << "RowCount:" << RowCount;
 
-
+    ui->accountInfoView->setSortingEnabled(false);
     ui->accountInfoView->clearContents();
     ui->accountInfoView->setRowCount(RowCount);
     ui->accountInfoView->setColumnCount(ACC_INFO_FIELD_COUNT);
@@ -198,7 +199,7 @@ void MainWindow::updateView()
     }
     ui->accountInfoView->hideColumn(0);
     ui->accountInfoView->sortByColumn(1,Qt::AscendingOrder);
-
+    ui->accountInfoView->setSortingEnabled(true);
 }
 
 void MainWindow::updateAccInfoView()
