@@ -32,6 +32,7 @@ private:
     void initLoinLog();
     void initAccInfoView();
     void updateView();
+    bool exportAccInfoData(QString filePath);
 
 private slots:
     void updateAccInfoView();
@@ -40,6 +41,7 @@ private slots:
     void showEditAccInfoDialog();
     void deleteAccInfo();
     void deleteAllAccInfo();
+    void exportAccInfo();
     void exit();
     void showChangePwdDialog();
     void showIntroDialog();
