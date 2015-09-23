@@ -5,3 +5,5 @@ Auther: Qianli Zhong
 Email: qianli_zh@163.com
 
 URL:  https://github.com/2013timlee/PasswordBook.git
+
+Lisense: GPL£¨GNU General Public License£©
