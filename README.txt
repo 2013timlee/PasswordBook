@@ -2,4 +2,4 @@ PasswordBook is a software that help you record password. It's similar to lastpa
 Author: Qianli Zhong
 Email: qianli_zh@163.com
 URL:  https://github.com/2013timlee/PasswordBook.git
-Lisense: GPL£¨GNU General Public License£©
+Lisense: GNU General Public License (GPL)
